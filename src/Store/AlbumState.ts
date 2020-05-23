@@ -19,6 +19,8 @@ export const searchAlbums = (searchTerm: string) => dispatch => {
         .then(r => dispatch(albumsLoaded(r.albums?.items ?? [])));
 }
 
+export const clearAlbums = () => albumsLoaded([]);
+
 const albumsLoading = (searchTerm: string, abortController): AppAction<{searchTerm: string, abortController: AbortController}> => ({
     type: ALBUM__LOADING,
     payload: {searchTerm, abortController},

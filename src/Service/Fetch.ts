@@ -18,10 +18,6 @@ export const getAccessToken = () => {
         .then(r => r.json())
         .then(r => {
             localStorage.setItem(accessTokenKey, r.access_token);
-            console.debug({
-                fn: 'getAccessToken',
-                r,
-            });
             return r.access_token;
         });
     // todo handle errors

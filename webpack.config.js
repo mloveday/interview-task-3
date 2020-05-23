@@ -3,6 +3,8 @@ var path = require('path');
 module.exports = {
     context: __dirname,
     entry: './src/index.tsx',
+    devtool: 'inline-source-map',
+    mode: 'development',
     output: {
         path: path.resolve(__dirname, "public/dist/"),
         filename: "bundle.js"
