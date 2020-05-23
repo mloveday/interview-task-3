@@ -5,6 +5,12 @@ import {AppState} from "../Store/store";
 import {useHistory, useLocation} from 'react-router-dom';
 import * as queryString from 'query-string';
 import {debounce} from 'lodash';
+import styled from 'styled-components';
+
+const Form = styled.form`
+    --width-card-wide: 100%;
+    box-sizing: border-box;
+`;
 
 const requestSearch = debounce((value: string, state: AlbumState, dispatch) => {
     if (state.abortController !== undefined) {
@@ -18,8 +24,13 @@ export const Toolbar: React.FC = props => {
     const location = useLocation();
     const dispatch = Redux.useDispatch();
     const albumState = Redux.useSelector((state: AppState) => state.albums);
-    const query = (queryString.parse(location.search).query as string) ?? '';
-    const [searchTerm, setSearchTerm] = React.useState(query);
+    const [searchTerm, setSearchTerm] = React.useState<string>();
+
+    if (searchTerm === undefined) {
+        const query = (queryString.parse(location.search).query as string) ?? '';
+        setSearchTerm(query);
+        requestSearch(query, albumState, dispatch);
+    }
 
     const onSearchChange = (value: string) => {
         if (value === '') {
@@ -33,11 +44,11 @@ export const Toolbar: React.FC = props => {
     };
 
     return <div>
-        <form>
+        <Form>
             <label>
                 <span>Search</span>
                 <input type='text' value={searchTerm} onChange={ev => onSearchChange(ev.target.value)} />
             </label>
-        </form>
+        </Form>
     </div>
 };
