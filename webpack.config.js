@@ -4,7 +4,7 @@ module.exports = {
     context: __dirname,
     entry: './src/index.ts',
     output: {
-        path: path.resolve(__dirname, "dist/"),
+        path: path.resolve(__dirname, "public/dist/"),
         filename: "bundle.js"
     },
     module: {
@@ -22,7 +22,7 @@ module.exports = {
         extensions: ["*", ".ts", ".tsx", '.js', '.jsx']
     },
     devServer: {
-        contentBase: path.join(__dirname, 'dist'),
+        contentBase: path.join(__dirname, 'public'),
         port: 8000
     }
 };
