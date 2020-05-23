@@ -15,7 +15,8 @@ export type AlbumState = {
 export const searchAlbums = (searchTerm: string) => dispatch => {
     const abortController = new AbortController();
     dispatch(albumsLoading(searchTerm, abortController));
-    fetchSearchAlbums(searchTerm, abortController).then(r => dispatch(albumsLoaded(r)));
+    fetchSearchAlbums(searchTerm, abortController)
+        .then(r => dispatch(albumsLoaded(r.albums?.items ?? [])));
 }
 
 const albumsLoading = (searchTerm: string, abortController): AppAction<{searchTerm: string, abortController: AbortController}> => ({

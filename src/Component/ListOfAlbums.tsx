@@ -5,7 +5,6 @@ import {AppState} from "../Store/store";
 import {Toolbar} from "./Toolbar";
 
 export const ListOfAlbums: React.FC = props => {
-    const dispatch = Redux.useDispatch();
     const albumState = Redux.useSelector((state: AppState) => state.albums);
 
     return <div>
