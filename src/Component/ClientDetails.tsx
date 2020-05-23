@@ -1,11 +1,20 @@
 import * as React from 'react';
+import {clientIdKey, clientSecretKey} from "../Service/Fetch";
 
 export const ClientDetails: React.FC = props => {
-    const [id, setId] = React.useState('');
-    const [secret, setSecret] = React.useState('');
-    const submit = () => {
+    const [id, setId] = React.useState(localStorage.getItem(clientIdKey));
+    const [secret, setSecret] = React.useState(localStorage.getItem(clientSecretKey));
+    const putInStorage = () => {
         console.debug('Storing credentials in local storage');
-        // TODO actually save in local storage
+        localStorage.setItem(clientIdKey, id);
+        localStorage.setItem(clientSecretKey, secret);
+    };
+    const deleteFromStorage = () => {
+        console.debug('Deleting credentials from local storage');
+        localStorage.removeItem(clientIdKey);
+        localStorage.removeItem(clientSecretKey);
+        setId('');
+        setSecret('');
     };
     return <div>
         <h3>Please enter your Spotify client details below to enable API access</h3>
@@ -28,7 +37,9 @@ export const ClientDetails: React.FC = props => {
                 <span>Client secret</span>
                 <input value={secret} onChange={ev => setSecret(ev.target.value)}/>
             </label>
-            <button type='button' onClick={submit}>Save to local storage</button>
+            <button type='button' onClick={putInStorage}>Save to local storage</button>
+            <br/>
+            <button type='button' onClick={deleteFromStorage}>Remove from local storage</button>
         </form>
     </div>
 }
