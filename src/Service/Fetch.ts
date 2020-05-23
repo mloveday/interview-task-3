@@ -1,3 +1,6 @@
+import * as queryString from 'query-string';
+import {Album} from "../Model/Album";
+
 export const clientIdKey = 'SPOTIFY_CLIENT_ID';
 export const clientSecretKey = 'SPOTIFY_CLIENT_SECRET';
 const accessTokenKey = 'SPOTIFY_ACCESS_TOKEN';
@@ -23,7 +26,15 @@ export const getAccessToken = () => {
     // todo handle errors
 }
 
-export const fetchWithAuth = (url: string) => {
+export const fetchSearchAlbums = (term: string): Promise<Album[]> => {
+    const queryParams = {
+        q: term,
+        type: 'album',
+    };
+    return fetchWithAuth(`/v1/search?${queryString.stringify(queryParams)}`);
+}
+
+const fetchWithAuth = (url: string) => {
     // todo if access token expired, refresh it (and then make the request)
     const accessToken = localStorage.getItem(accessTokenKey);
     if (!accessToken) {

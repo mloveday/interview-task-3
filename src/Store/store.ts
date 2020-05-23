@@ -1,13 +1,12 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import {Album} from "../Model/Album";
-import {albums} from "./AlbumState";
+import {composeWithDevTools} from 'redux-devtools-extension';
+import {albums, AlbumState} from "./AlbumState";
 import {credentials, Credentials} from "./CredentialsState";
 
 // TODO add the state shape here
 export type AppState = {
-    albums: Album[],
+    albums: AlbumState,
     credentials: Credentials,
 };
 

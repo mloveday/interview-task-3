@@ -1,4 +1,4 @@
-// todo this is just a placeholder to display _something_
+// todo this needs to change drastically
 export class Album {
     id: number;
     name: string;
