@@ -4,6 +4,7 @@ import {Album} from "../Model/Album";
 import {AlbumInList} from "./AlbumInList";
 import {AppState} from "../Store/store";
 import {setAllAlbums} from "../Store/AlbumState";
+import {Toolbar} from "./Toolbar";
 
 export const ListOfAlbums: React.FC = props => {
     const dispatch = Redux.useDispatch();
@@ -27,6 +28,7 @@ export const ListOfAlbums: React.FC = props => {
         }, 1000);
     }
     return <div>
+        <Toolbar/>
         <ul>
             {albums.map(album => <AlbumInList key={album.id} album={album}/>)}
         </ul>

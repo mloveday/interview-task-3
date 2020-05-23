@@ -9,6 +9,7 @@ import {ClientDetails} from "./ClientDetails";
 import {clientIdKey, clientSecretKey} from "../Service/Fetch";
 import {resetCredentials, setCredentials} from "../Store/CredentialsState";
 import {AppState} from "../Store/store";
+import {NavBar} from "./NavBar";
 
 export const Routing: React.FC = props => {
     const dispatch = Redux.useDispatch();
@@ -25,7 +26,7 @@ export const Routing: React.FC = props => {
     return (
         <React.Fragment>
             <Header/>
-            <Toolbar/>
+            <NavBar/>
             <Switch>
                 <Route path='/credentials' exact component={ClientDetails}/>
                 {isMissingClientDetails && <Redirect to='/credentials'/>}
