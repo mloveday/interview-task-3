@@ -6,7 +6,8 @@
   "author": "Miles Loveday <miles.loveday@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "webpack && webpack-dev-server"
+    "compile": "webpack --watch",
+    "serve": "webpack-dev-server"
   },
   "dependencies": {
     "@babel/core": "^7.9.6",
