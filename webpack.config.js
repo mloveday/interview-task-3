@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
     context: __dirname,
-    entry: './src/index.ts',
+    entry: './src/index.tsx',
     output: {
         path: path.resolve(__dirname, "public/dist/"),
         filename: "bundle.js"
@@ -13,7 +13,9 @@ module.exports = {
                 test: /\.(ts|tsx)$/,
                 exclude: /(node_modules|bower_components)/,
                 loader: "babel-loader",
-                options: {presets: ["@babel/env", "@babel/preset-typescript"]}
+                options: {
+                    presets: ["@babel/env", "@babel/preset-typescript", "@babel/preset-react"]
+                }
             }
         ]
     },
