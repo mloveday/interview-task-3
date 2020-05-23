@@ -8,6 +8,7 @@ import {setAllAlbums} from "../Store/AlbumState";
 export const ListOfAlbums: React.FC = props => {
     const dispatch = Redux.useDispatch();
     const albums = Redux.useSelector((state: AppState) => state.albums);
+    // todo this should be in state to avoid reload on each render and to allow us to use thunks
     const [fetchState, setFetchState] = React.useState('empty');
     const [abortController, setAbortController] = React.useState(new AbortController());
     React.useEffect(() => () => abortController.abort(), [abortController]); // handle component dismount
