@@ -26,15 +26,17 @@ export const Routing: React.FC = props => {
     return (
         <React.Fragment>
             <Header/>
-            <NavBar/>
-            <Switch>
-                <Route path='/credentials' exact component={ClientDetails}/>
-                {isMissingClientDetails && <Redirect to='/credentials'/>}
-                <Route path='/' exact component={ListOfAlbums}/>
-                <Route path='/album/:id' exact component={AlbumDetail}/>
-                <Route path='*'>
-                    <div>Page not found</div>
-                </Route>
-            </Switch>
+            <main>
+                <NavBar/>
+                <Switch>
+                    <Route path='/credentials' exact component={ClientDetails}/>
+                    {isMissingClientDetails && <Redirect to='/credentials'/>}
+                    <Route path='/' exact component={ListOfAlbums}/>
+                    <Route path='/album/:id' exact component={AlbumDetail}/>
+                    <Route path='*'>
+                        <div>Page not found</div>
+                    </Route>
+                </Switch>
+            </main>
         </React.Fragment>)
 };
