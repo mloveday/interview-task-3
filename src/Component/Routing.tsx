@@ -1,22 +1,35 @@
 import * as React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import * as Redux from 'react-redux';
+import {Switch, Route, Redirect} from 'react-router-dom';
 import {Header} from "./Header";
 import {Toolbar} from "./Toolbar";
 import {ListOfAlbums} from "./ListOfAlbums";
 import {AlbumDetail} from "./AlbumDetail";
 import {ClientDetails} from "./ClientDetails";
+import {clientIdKey, clientSecretKey} from "../Service/Fetch";
+import {resetCredentials, setCredentials} from "../Store/CredentialsState";
+import {AppState} from "../Store/store";
 
 export const Routing: React.FC = props => {
-    // todo check for the existence of client details in local storage and prompt for them here if not present
-    // normally this would be handled by using a backend of our own where the client secret is stored
-    // but this is a simple mockup, and we can just let any users enter their own client credentials to avoid any security issues
+    const dispatch = Redux.useDispatch();
+    const credentials = Redux.useSelector((state: AppState) => state.credentials);
+
+    const clientId = localStorage.getItem(clientIdKey);
+    const clientSecret = localStorage.getItem(clientSecretKey);
+
+    if ((clientId && !credentials.id) || (clientSecret && !credentials.secret)) {
+        dispatch(setCredentials(clientId, clientSecret));
+    }
+
+    const isMissingClientDetails = !clientId || !clientSecret;
     return (
         <React.Fragment>
             <Header/>
             <Toolbar/>
             <Switch>
-                <Route path='/' exact component={ListOfAlbums}/>
                 <Route path='/credentials' exact component={ClientDetails}/>
+                {isMissingClientDetails && <Redirect to='/credentials'/>}
+                <Route path='/' exact component={ListOfAlbums}/>
                 <Route path='/album/:id' exact component={AlbumDetail}/>
                 <Route path='*'>
                     <div>Page not found</div>
