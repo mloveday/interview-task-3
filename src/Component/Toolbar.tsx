@@ -5,12 +5,6 @@ import {AppState} from "../Store/store";
 import {useHistory, useLocation} from 'react-router-dom';
 import * as queryString from 'query-string';
 import {debounce} from 'lodash';
-import styled from 'styled-components';
-
-const Form = styled.form`
-    --width-card-wide: 100%;
-    box-sizing: border-box;
-`;
 
 const requestSearch = debounce((value: string, state: AlbumState, dispatch) => {
     if (state.abortController !== undefined) {
@@ -46,11 +40,11 @@ export const Toolbar: React.FC = props => {
     };
 
     return <div>
-        <Form>
+        <form>
             <label>
                 <span>Search</span>
                 <input type='text' value={searchTerm} onChange={ev => onSearchChange(ev.target.value)} />
             </label>
-        </Form>
+        </form>
     </div>
 };
