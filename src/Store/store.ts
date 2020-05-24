@@ -4,13 +4,11 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {albums, AlbumState} from "./AlbumState";
 import {credentials, Credentials} from "./CredentialsState";
 
-// TODO add the state shape here
 export type AppState = {
     albums: AlbumState,
     credentials: Credentials,
 };
 
-// TODO add the reducers here
 const rootReducer = combineReducers<AppState>({
     albums,
     credentials,
