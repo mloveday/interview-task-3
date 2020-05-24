@@ -29,7 +29,9 @@ export const Toolbar: React.FC = props => {
     if (searchTerm === undefined) {
         const query = (queryString.parse(location.search).query as string) ?? '';
         setSearchTerm(query);
-        requestSearch(query, albumState, dispatch);
+        if (albumState.searchTerm !== query) {
+            requestSearch(query, albumState, dispatch);
+        }
     }
 
     const onSearchChange = (value: string) => {
