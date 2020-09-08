@@ -9,7 +9,7 @@ export type AppState = {
     credentials: Credentials,
 };
 
-const rootReducer = combineReducers<AppState>({
+export const rootReducer = combineReducers<AppState>({
     albums,
     credentials,
 });

@@ -16,6 +16,10 @@
 - Visit localhost:8000 in a browser
     - install redux dev tools in your browser to see what's happening in the store
     - react also have dev tools for seeing what's being rendered and profiling and whatnot
+    
+## Running tests
+- Run `yarn jest`
+    - Alternatively, in a Jetbrains IDE, run the `test` run configuration or `test watch` to watch for changes & re-run
 
 ## Deployment
 - Not intended for deployment :)
