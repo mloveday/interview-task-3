@@ -1,5 +1,7 @@
 # interview-task-3
 
+![Tests](https://github.com/mloveday/interview-task-3/workflows/Tests/badge.svg?branch=master)
+
 ## Pre-requisites
 - Node 12 (LTS)
 - yarn
