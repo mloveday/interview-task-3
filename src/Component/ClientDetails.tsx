@@ -7,8 +7,8 @@ export const ClientDetails: React.FC = props => {
     // normally this would be handled by using a backend of our own where the client secret is stored
     // but this is a simple mockup, and we can just let any users enter their own client credentials to avoid any security issues
     const dispatch = Redux.useDispatch();
-    const [id, setId] = React.useState(localStorage.getItem(clientIdKey));
-    const [secret, setSecret] = React.useState(localStorage.getItem(clientSecretKey));
+    const [id, setId] = React.useState(localStorage.getItem(clientIdKey) ?? '');
+    const [secret, setSecret] = React.useState(localStorage.getItem(clientSecretKey) ?? '');
     const putInStorage = () => {
         console.debug('Storing credentials in local storage');
         localStorage.setItem(clientIdKey, id);
@@ -38,15 +38,15 @@ export const ClientDetails: React.FC = props => {
         <form>
             <label>
                 <span>Client ID</span>
-                <input value={id} onChange={ev => setId(ev.target.value)}/>
+                <input id='client-id-input' value={id} onChange={ev => setId(ev.target.value)}/>
             </label>
             <label>
                 <span>Client secret</span>
-                <input value={secret} onChange={ev => setSecret(ev.target.value)}/>
+                <input id='client-secret-input' value={secret} onChange={ev => setSecret(ev.target.value)}/>
             </label>
-            <button type='button' onClick={putInStorage}>Save to local storage</button>
+            <button id='save-credentials' type='button' onClick={putInStorage}>Save to local storage</button>
             <br/>
-            <button type='button' onClick={deleteFromStorage}>Remove from local storage</button>
+            <button id='remove-credentials' type='button' onClick={deleteFromStorage}>Remove from local storage</button>
         </form>
     </div>
 }
