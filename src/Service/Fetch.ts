@@ -40,7 +40,7 @@ export const fetchSearchAlbums = (term: string, abortController: AbortController
 
 export const fetchAlbum = (id: string, abortController: AbortController): Promise<Album> => fetchWithAuth(`/v1/albums/${id}`, abortController);
 
-const fetchWithAuth = (url: string, abortController: AbortController) => {
+export const fetchWithAuth = (url: string, abortController: AbortController) => {
     const accessToken = localStorage.getItem(accessTokenKey);
     if (!accessToken) {
         return getAccessToken().then(r => fetchWithAccessToken(url, r, abortController));
@@ -53,7 +53,7 @@ const fetchWithAuth = (url: string, abortController: AbortController) => {
         });
 };
 
-const fetchWithAccessToken = (url: string, accessToken: string, abortController: AbortController) =>  fetch
+export const fetchWithAccessToken = (url: string, accessToken: string, abortController: AbortController) =>  fetch
 (`https://api.spotify.com${url}`, {
     signal: abortController.signal,
     headers: {
@@ -71,4 +71,5 @@ const fetchWithAccessToken = (url: string, accessToken: string, abortController:
             return r;
         })
     }
+    return r.json();
 });
