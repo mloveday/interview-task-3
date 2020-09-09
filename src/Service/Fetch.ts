@@ -1,5 +1,6 @@
 import * as queryString from 'query-string';
 import {Album} from "../Model/Album";
+import {encode} from 'js-base64';
 
 export const clientIdKey = 'SPOTIFY_CLIENT_ID';
 export const clientSecretKey = 'SPOTIFY_CLIENT_SECRET';
@@ -13,7 +14,7 @@ export const getAccessToken = () => {
         body: new URLSearchParams({'grant_type': 'client_credentials'}),
         headers: {
             'Content-Type':'application/x-www-form-urlencoded',
-            'Authorization': `Basic ${btoa(`${localStorage.getItem(clientIdKey)}:${localStorage.getItem(clientSecretKey)}`)}`,
+            'Authorization': `Basic ${encode(`${localStorage.getItem(clientIdKey)}:${localStorage.getItem(clientSecretKey)}`)}`,
         }
     })
         .then(r => r.json())
