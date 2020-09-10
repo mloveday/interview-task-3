@@ -1,6 +1,7 @@
 # interview-task-3
 
 ![Tests](https://github.com/mloveday/interview-task-3/workflows/Tests/badge.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/mloveday/interview-task-3/badge.svg?branch=master)](https://coveralls.io/github/mloveday/interview-task-3?branch=master)
 
 ## Pre-requisites
 - Node 12 (LTS)
