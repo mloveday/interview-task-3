@@ -20,14 +20,14 @@ export type AlbumState = {
 export const searchAlbums = (searchTerm: string) => dispatch => {
     const abortController = new AbortController();
     dispatch(albumsLoading(searchTerm, abortController));
-    fetchSearchAlbums(searchTerm, abortController)
+    return fetchSearchAlbums(searchTerm, abortController)
         .then(r => dispatch(albumsLoaded(r.albums?.items ?? [])));
 }
 
 export const getAlbum = (id: string) => dispatch => {
     const abortController = new AbortController();
     dispatch(albumLoading(id, abortController));
-    fetchAlbum(id, abortController)
+    return fetchAlbum(id, abortController)
         .then(r => dispatch(albumLoaded(r)));
 }
 
