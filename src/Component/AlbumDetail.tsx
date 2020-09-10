@@ -24,7 +24,7 @@ export const AlbumDetail: React.FC<{match: match<{id: string}>}> = props => {
     return <div>
         <Link to={`/${location.search}`}>&lt;&lt; back to list</Link>
         <h2>{album.name}</h2>
-        <img src={image.url} alt={`Album artwork`}/>
+        {image && <img src={image.url} alt={`Album artwork`}/>}
         <h3>Artists</h3>
         <ul>{album.artists.map(artist => <li key={artist.id}>{artist.name}</li>)}</ul>
         <h3>Other information</h3>

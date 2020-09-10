@@ -33,13 +33,14 @@ describe('AlbumDetail component', () => {
     images: images,
   })
 
-  const createState = (id, fetchState, albums) => ({
+  const createState = (id, fetchState, albums, album?) => ({
     albums: {
       fetchState: 'empty',
       searchTerm: '',
       singleFetchState: fetchState,
       singleId: id,
-      albums: albums,
+      albums,
+      album,
     }
   })
 
@@ -65,7 +66,7 @@ describe('AlbumDetail component', () => {
     expect(actions).toEqual([getAlbum(match.params.id)]);
   })
 
-  test('Given album not in state and not loading, dispatches load album action', () => {
+  test('Given album not in albums state and not loading, dispatches load album action', () => {
     const mockState = createState(
       match.params.id,
       'empty',
@@ -90,7 +91,7 @@ describe('AlbumDetail component', () => {
     expect(result.contains(<div>Album not found</div>)).toEqual(true);
   })
 
-  test('Given album in state, renders album detail', () => {
+  test('Given album in multi-album state, renders album detail', () => {
     const artist = {id: 'artist_id', name: 'artist name'};
     const image = {url: 'url/somewhere'};
     const album = createAlbum(match.params.id, [artist], [image]);
@@ -109,5 +110,40 @@ describe('AlbumDetail component', () => {
     expect(result.contains(<ul>{album.artists.map(artist => <li key={artist.id}>{artist.name}</li>)}</ul>)).toEqual(true);
     expect(result.contains(<div>Released on {moment(album.release_date).format('dddd, MMMM Do YYYY')}</div>)).toEqual(true);
     expect(result.contains(<div>{album.total_tracks} tracks</div>)).toEqual(true);
+  })
+
+  test('Given album in single-album state, renders album detail', () => {
+    const artist = {id: 'artist_id', name: 'artist name'};
+    const image = {url: 'url/somewhere'};
+    const album = createAlbum(match.params.id, [artist], [image]);
+    const mockState = createState(match.params.id, 'loaded', [], album);
+    const mockStore = configureStore([thunk])(mockState);
+
+    const result = render(mockStore);
+
+    const actions = mockStore.getActions();
+    expect(actions).toEqual([]);
+    expect(result.contains(<div>Album not found</div>)).toEqual(false);
+
+    expect(result.contains(<Link to={`/${mockLocation.search}`}>&lt;&lt; back to list</Link>)).toEqual(true);
+    expect(result.contains(<h2>{album.name}</h2>)).toEqual(true);
+    expect(result.contains(<img src={image.url} alt={`Album artwork`}/>)).toEqual(true);
+    expect(result.contains(<ul>{album.artists.map(artist => <li key={artist.id}>{artist.name}</li>)}</ul>)).toEqual(true);
+    expect(result.contains(<div>Released on {moment(album.release_date).format('dddd, MMMM Do YYYY')}</div>)).toEqual(true);
+    expect(result.contains(<div>{album.total_tracks} tracks</div>)).toEqual(true);
+  })
+
+  test('Given album with no image, renders album without image', () => {
+    const artist = {id: 'artist_id', name: 'artist name'};
+    const album = createAlbum(match.params.id, [artist], []);
+    const mockState = createState(match.params.id, 'loaded', [album]);
+    const mockStore = configureStore([thunk])(mockState);
+
+    const result = render(mockStore);
+
+    const actions = mockStore.getActions();
+    expect(actions).toEqual([]);
+    expect(result.contains(<div>Album not found</div>)).toEqual(false);
+    expect(result.find('img')).toHaveLength(0);
   })
 })
