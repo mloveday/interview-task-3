@@ -50,6 +50,7 @@ export const fetchWithAuth = (url: string, abortController: AbortController) => 
             if (r.message === ERR_CODE__AUTH_EXPIRED) {
                 return getAccessToken().then(r => fetchWithAccessToken(url, r, abortController));
             }
+            throw r;
         });
 };
 

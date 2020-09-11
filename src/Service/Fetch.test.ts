@@ -1,13 +1,23 @@
 import fetchMock from 'jest-fetch-mock';
-import {fetchWithAccessToken, getAccessToken} from "./Fetch";
+import {fetchWithAccessToken, fetchWithAuth, getAccessToken} from "./Fetch";
 
 describe('Service/Fetch', () => {
-  beforeEach(() => {
-    fetchMock.resetMocks();
-    localStorage.clear();
-  })
+  const mockExpiredTokenResponse = () => fetchMock.mockResponseOnce(
+    JSON.stringify({error: {message: 'The access token expired'}}),
+    {status: 401}
+  );
+
+  const mockUrl =(url) => `https://api.spotify.com${url}`;
 
   describe('getAccessToken', () => {
+    beforeEach(() => {
+      fetchMock.enableMocks();
+      fetchMock.resetMocks();
+      localStorage.clear();
+      // @ts-ignore
+      localStorage.setItem.mockClear();
+    })
+    
     test('successful response sets token in storage and returns token', () => {
       const expectedAccessToken = 'expected_access_token';
       fetchMock.mockResponseOnce(JSON.stringify({access_token: expectedAccessToken}))
@@ -20,19 +30,96 @@ describe('Service/Fetch', () => {
     // todo all the other important tests for existing functionality
     // todo test failure cases, fix up handling them elsewhere
   })
+
   describe('fetchWithAuth', () => {
-    test.skip('with access token in storage, fetches', () => {
-      // todo
+    beforeEach(() => {
+      // fetchMock.enableMocks();
+      fetchMock.resetMocks();
+      localStorage.clear();
+      // @ts-ignore
+      localStorage.setItem.mockClear();
     })
-    test.skip('with no access token in storage, gets access token then fetches', () => {
-      // todo
+
+    test('with access token in storage, fetches', () => {
+      localStorage.setItem('SPOTIFY_ACCESS_TOKEN', 'some-token');
+      const url = '/some-url';
+      const expectedResponse = {value: 'expectedResponse'};
+      fetchMock.mockResponse((req: Request) => req.url === mockUrl(url) ? Promise.resolve(JSON.stringify(expectedResponse)) : Promise.reject());
+
+      const response = fetchWithAuth(url, new AbortController());
+
+      expect.assertions(1);
+      return response.then(result => expect(result).toEqual(expectedResponse));
     })
-    test.skip('with expired access token in storage, gets new access token then fetches', () => {
-      // todo
+
+    test('with no access token in storage, gets access token then fetches', () => {
+      const expectedAccessToken = 'expected_access_token';
+      const url = '/some-url';
+      const expectedResponse = {value: 'expectedResponse'};
+      fetchMock.mockResponse((req: Request) => {
+        switch(req.url) {
+          case 'https://accounts.spotify.com/api/token':
+            return Promise.resolve(JSON.stringify({access_token: expectedAccessToken}));
+          case mockUrl(url):
+            return Promise.resolve(JSON.stringify(expectedResponse));
+        }
+        return Promise.reject();
+      });
+
+      const response = fetchWithAuth(url, new AbortController());
+
+      expect.assertions(2);
+      return response.then(result => {
+        expect(localStorage.setItem).toHaveBeenCalledWith('SPOTIFY_ACCESS_TOKEN', expectedAccessToken);
+        expect(result).toEqual(expectedResponse);
+      });
+    })
+
+    test('with expired access token in storage, gets new access token then fetches', () => {
+      // given expired token
+      const expiredToken = 'expired_token';
+      localStorage.setItem('SPOTIFY_ACCESS_TOKEN', expiredToken);
+      // @ts-ignore
+      localStorage.setItem.mockClear();
+      const validToken = 'valid_token';
+      const url = '/some-url';
+      const expectedResponse = {value: 'expectedResponse'};
+
+      fetchMock.mockResponse((req: Request) => {
+        if (req.headers.get('Authorization') === `Bearer ${expiredToken}`) {
+          return Promise.resolve({
+            body: JSON.stringify({error: {message: 'The access token expired'}}),
+            status: 401,
+          });
+        }
+        switch(req.url) {
+          case 'https://accounts.spotify.com/api/token':
+            return Promise.resolve(JSON.stringify({access_token: validToken}));
+          case mockUrl(url):
+            return Promise.resolve(JSON.stringify(expectedResponse));
+        }
+        return Promise.reject();
+      });
+
+      const response = fetchWithAuth(url, new AbortController());
+
+      expect.assertions(2);
+      return response.then(result => {
+        expect(localStorage.setItem).toHaveBeenCalledWith('SPOTIFY_ACCESS_TOKEN', validToken);
+        expect(result).toEqual(expectedResponse);
+      });
     })
   })
 
   describe('fetchWithAccessToken', () => {
+    beforeEach(() => {
+      fetchMock.enableMocks();
+      fetchMock.resetMocks();
+      localStorage.clear();
+      // @ts-ignore
+      localStorage.setItem.mockClear();
+    })
+
     test('OK response, returns parsed response', () => {
       const expectedResponse = {value: 'expectedResponse'};
       fetchMock.mockResponseOnce(JSON.stringify(expectedResponse));
@@ -45,7 +132,7 @@ describe('Service/Fetch', () => {
 
     test('401 response for expired access token, throws expired token error', () => {
       const requestUrl = '/some-url';
-      fetchMock.mockResponseOnce(JSON.stringify({error: {message: 'The access token expired'}}), {status: 401});
+      mockExpiredTokenResponse();
 
       const response = fetchWithAccessToken(requestUrl, 'bar', new AbortController());
 
