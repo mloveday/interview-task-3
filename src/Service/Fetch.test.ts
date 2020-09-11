@@ -26,18 +26,13 @@ describe('Service/Fetch', () => {
         expect(localStorage.setItem).toHaveBeenCalledWith('SPOTIFY_ACCESS_TOKEN', expectedAccessToken);
       });
     })
-
-    // todo all the other important tests for existing functionality
-    // todo test failure cases, fix up handling them elsewhere
   })
 
   describe('fetchWithAuth', () => {
     beforeEach(() => {
-      // fetchMock.enableMocks();
       fetchMock.resetMocks();
       localStorage.clear();
-      // @ts-ignore
-      localStorage.setItem.mockClear();
+      (localStorage.setItem as jest.Mock).mockClear();
     })
 
     test('with access token in storage, fetches', () => {
@@ -79,8 +74,7 @@ describe('Service/Fetch', () => {
       // given expired token
       const expiredToken = 'expired_token';
       localStorage.setItem('SPOTIFY_ACCESS_TOKEN', expiredToken);
-      // @ts-ignore
-      localStorage.setItem.mockClear();
+      (localStorage.setItem as jest.Mock).mockClear();
       const validToken = 'valid_token';
       const url = '/some-url';
       const expectedResponse = {value: 'expectedResponse'};
@@ -116,8 +110,7 @@ describe('Service/Fetch', () => {
       fetchMock.enableMocks();
       fetchMock.resetMocks();
       localStorage.clear();
-      // @ts-ignore
-      localStorage.setItem.mockClear();
+      (localStorage.setItem as jest.Mock).mockClear();
     })
 
     test('OK response, returns parsed response', () => {

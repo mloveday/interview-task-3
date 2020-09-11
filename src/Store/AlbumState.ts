@@ -1,6 +1,6 @@
 import {Album} from "../Model/Album";
 import {AppAction} from "../Model/AppAction";
-import {fetchAlbum, fetchSearchAlbums} from "../Service/Fetch";
+import {fetchAlbum, fetchSearchAlbums} from "../Service/SpotifyApi";
 
 const ALBUMS__LOADING = 'ALBUMS__LOADING';
 const ALBUMS__LOADED = 'ALBUMS__LOADED';

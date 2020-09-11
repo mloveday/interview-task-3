@@ -1,17 +1,15 @@
 import {albums, AlbumState, clearAlbums, getAlbum, searchAlbums} from "./AlbumState";
-import * as Fetch from "../Service/Fetch";
+import * as SpotifyApi from "../Service/SpotifyApi";
 
-jest.mock('../Service/Fetch')
+jest.mock('../Service/SpotifyApi')
 
 describe('AlbumState', () => {
   describe('searchAlbums', () => {
     const mockSearchAlbumsResponse = ['foo', 'bar'];
-    // @ts-ignore
-    const mockSearchResponse = () => Fetch.fetchSearchAlbums.mockResolvedValue(
+    const mockSearchResponse = () => (SpotifyApi.fetchSearchAlbums as jest.Mock).mockResolvedValue(
       new Promise(resolve => resolve({albums: {href: '', items : mockSearchAlbumsResponse}}))
     );
-    // @ts-ignore
-    const mockEmptySearchResponse = () => Fetch.fetchSearchAlbums.mockResolvedValue(
+    const mockEmptySearchResponse = () => (SpotifyApi.fetchSearchAlbums as jest.Mock).mockResolvedValue(
       new Promise(resolve => resolve({}))
     );
 
@@ -50,8 +48,7 @@ describe('AlbumState', () => {
 
   describe('getAlbum', () => {
     const mockAlbumResponse = {foo: 'bar'};
-    // @ts-ignore
-    const mockFetchAlbumResponse = () => Fetch.fetchAlbum.mockResolvedValue(
+    const mockFetchAlbumResponse = () => (SpotifyApi.fetchAlbum as jest.Mock).mockResolvedValue(
       new Promise(resolve => resolve(mockAlbumResponse))
     );
 
