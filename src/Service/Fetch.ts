@@ -52,7 +52,7 @@ export const fetchWithAccessToken = (url: string, accessToken: string, abortCont
       if (r.error?.message === 'The access token expired') {
         throw new Error(ERR_CODE__AUTH_EXPIRED);
       }
-      return r;
+      throw r;
     })
   }
   return r.json();

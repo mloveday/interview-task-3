@@ -103,6 +103,18 @@ describe('Service/Fetch', () => {
         expect(result).toEqual(expectedResponse);
       });
     })
+
+    test('with unhandled API error, throws the error', () => {
+      localStorage.setItem('SPOTIFY_ACCESS_TOKEN', 'some-token');
+      const url = '/some-url';
+      const expectedMessage = 'Some unknown error';
+      fetchMock.mockResponseOnce(JSON.stringify({error: {message: expectedMessage}}), {status: 401});
+
+      const response = fetchWithAuth(url, new AbortController());
+
+      expect.assertions(1);
+      return response.catch(result => expect(result.error.message).toEqual(expectedMessage));
+    })
   })
 
   describe('fetchWithAccessToken', () => {
@@ -133,7 +145,7 @@ describe('Service/Fetch', () => {
       return response.catch(result => expect(result).toEqual(new Error('ERR_CODE__AUTH_EXPIRED')));
     })
 
-    test('Generic 401 response, returns response', () => {
+    test('Generic 401 response, throws response', () => {
       const requestUrl = '/some-url';
       const expectedResponse = {value: 'expectedResponse'};
       fetchMock.mockResponseOnce(JSON.stringify(expectedResponse), {status: 401});
@@ -141,7 +153,7 @@ describe('Service/Fetch', () => {
       const response = fetchWithAccessToken(requestUrl, 'bar', new AbortController());
 
       expect.assertions(1);
-      return response.then(result => expect(result).toEqual(expectedResponse));
+      return response.catch(result => expect(result).toEqual(expectedResponse));
     })
 
     test('Bad response, returns response', () => {
