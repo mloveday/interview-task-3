@@ -1,7 +1,7 @@
 import 'jsdom-global/register';
 import * as React from 'react';
 import configureStore from 'redux-mock-store';
-import * as Adapter from 'enzyme-adapter-react-16';
+import Adapter from 'enzyme-adapter-react-16';
 import * as Enzyme from 'enzyme';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';

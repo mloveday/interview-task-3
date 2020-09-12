@@ -1,7 +1,7 @@
 import 'jsdom-global/register';
 import * as React from 'react';
-import * as Router from 'react-router';
-import * as Adapter from 'enzyme-adapter-react-16';
+import Router from 'react-router';
+import Adapter from 'enzyme-adapter-react-16';
 import * as Enzyme from 'enzyme';
 import {Link, BrowserRouter} from 'react-router-dom';
 import {AlbumInList} from "./AlbumInList";

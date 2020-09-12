@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'react-redux';
 import {Link, match, useLocation} from 'react-router-dom';
-import * as moment from 'moment';
+import moment from 'moment';
 import {AppState} from "../Store/store";
 import {getAlbum} from "../Store/AlbumState";
 
