@@ -2,7 +2,6 @@ import 'jsdom-global/register';
 import * as React from 'react';
 import configureStore from 'redux-mock-store';
 import Router, { useHistory } from 'react-router';
-import Adapter from 'enzyme-adapter-react-16';
 import Enzyme from 'enzyme';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
@@ -11,8 +10,6 @@ import {Toolbar} from "./Toolbar";
 import {searchAlbums} from "../Store/__mocks__/AlbumState";
 import H from 'history';
 import {clearAlbums} from "../Store/AlbumState";
-
-Enzyme.configure({adapter: new Adapter()})
 
 jest.mock('../Store/AlbumState');
 

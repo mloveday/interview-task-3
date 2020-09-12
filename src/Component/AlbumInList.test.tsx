@@ -1,12 +1,9 @@
 import 'jsdom-global/register';
 import * as React from 'react';
 import Router from 'react-router';
-import Adapter from 'enzyme-adapter-react-16';
 import * as Enzyme from 'enzyme';
 import {Link, BrowserRouter} from 'react-router-dom';
 import {AlbumInList} from "./AlbumInList";
-
-Enzyme.configure({adapter: new Adapter()})
 
 describe('AlbumInList component', () => {
   const mockLocation = {

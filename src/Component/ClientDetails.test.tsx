@@ -1,7 +1,6 @@
 import 'jsdom-global/register';
 import * as React from 'react';
 import configureStore from 'redux-mock-store';
-import Adapter from 'enzyme-adapter-react-16';
 import * as Enzyme from 'enzyme';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
@@ -10,7 +9,6 @@ import {ClientDetails} from "./ClientDetails";
 import {clientIdKey, clientSecretKey} from "../Service/Fetch";
 import {resetCredentials} from "../Store/CredentialsState";
 
-Enzyme.configure({adapter: new Adapter()})
 
 jest.mock('../Store/AlbumState')
 

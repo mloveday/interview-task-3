@@ -2,7 +2,6 @@ import 'jsdom-global/register';
 import * as React from 'react';
 import configureStore from 'redux-mock-store';
 import Router from 'react-router';
-import Adapter from 'enzyme-adapter-react-16';
 import * as Enzyme from 'enzyme';
 import {getAlbum} from "../Store/AlbumState";
 import {AlbumDetail} from "./AlbumDetail";
@@ -10,8 +9,6 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import {Link, BrowserRouter} from 'react-router-dom';
 import moment = require('moment');
-
-Enzyme.configure({adapter: new Adapter()})
 
 jest.mock('../Store/AlbumState')
 
