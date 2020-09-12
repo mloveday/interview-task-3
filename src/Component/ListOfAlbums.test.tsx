@@ -8,6 +8,8 @@ import {ListOfAlbums} from "./ListOfAlbums";
 import thunk from 'redux-thunk';
 import {AlbumInList} from "./AlbumInList";
 
+jest.mock('../Store/AlbumState')
+
 describe('ListOfAlbums component', () => {
 
   const createAlbum = (id, artists, images) => ({
