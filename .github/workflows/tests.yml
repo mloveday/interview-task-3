@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Build
-        run: yarn webpack
+        run: yarn webpack --config webpack.prod.config.js
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
