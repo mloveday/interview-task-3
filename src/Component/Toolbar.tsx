@@ -13,7 +13,7 @@ const requestSearch = debounce((value: string, state: AlbumState, dispatch) => {
     dispatch(searchAlbums(value));
 }, 250);
 
-export const Toolbar: React.FC = props => {
+export const Toolbar: React.FC = () => {
     const history = useHistory();
     const location = useLocation();
     const dispatch = Redux.useDispatch();
@@ -40,7 +40,7 @@ export const Toolbar: React.FC = props => {
     };
 
     return <div>
-        <form>
+        <form onSubmit={e => e.preventDefault()}>
             <label>
                 <span>Search</span>
                 <input id='search-input' type='text' value={searchTerm} onChange={ev => onSearchChange(ev.target.value)} />
