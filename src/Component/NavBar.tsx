@@ -41,6 +41,9 @@ export const NavBar: React.FC = props => {
             <li><a href='https://github.com/mloveday/interview-task-3' target='_blank'>
                 Github repo <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a></li>
+            <li><a href='https://coveralls.io/github/mloveday/interview-task-3' target='_blank'>
+                Code coverage <FontAwesomeIcon icon={faExternalLinkAlt} />
+            </a></li>
             <li><a href='https://milesloveday.com' target='_blank'>
                 MilesLoveday.com <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a></li>
