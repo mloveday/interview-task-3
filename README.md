@@ -3,7 +3,7 @@
 ![Tests](https://github.com/mloveday/interview-task-3/workflows/Tests/badge.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/mloveday/interview-task-3/badge.svg?branch=master)](https://coveralls.io/github/mloveday/interview-task-3?branch=master)
 
-See the page in action on [github pages](https://mloveday.github.io/interview-task-3), deployed via github actions.
+See the page in action on <a href="https://mloveday.github.io/interview-task-3" target="_blank">Github Pages</a>, deployed via github actions.
 
 ## Pre-requisites
 - Node 12 (LTS)
