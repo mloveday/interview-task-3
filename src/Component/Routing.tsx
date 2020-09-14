@@ -10,6 +10,11 @@ import {clientIdKey, clientSecretKey} from "../Service/Fetch";
 import {resetCredentials, setCredentials} from "../Store/CredentialsState";
 import {AppState} from "../Store/store";
 import {NavBar} from "./NavBar";
+import styled from 'styled-components';
+
+const CompactMain = styled.main`
+  padding-top: 0;
+`;
 
 export const Routing: React.FC = props => {
     const dispatch = Redux.useDispatch();
@@ -26,7 +31,7 @@ export const Routing: React.FC = props => {
     return (
         <React.Fragment>
             <Header/>
-            <main>
+            <CompactMain>
                 <NavBar/>
                 <Switch>
                     <Route path='/credentials' exact component={ClientDetails}/>
@@ -37,6 +42,6 @@ export const Routing: React.FC = props => {
                         <div>Page not found</div>
                     </Route>
                 </Switch>
-            </main>
+            </CompactMain>
         </React.Fragment>)
 };
