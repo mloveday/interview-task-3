@@ -6,6 +6,7 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '/node_modules/',
     'src/index.tsx',
+    'src/gh-index.tsx',
     'src/Store/store.ts',
   ]
 };
