@@ -42,7 +42,7 @@ export const Toolbar: React.FC = () => {
     return <div>
         <form onSubmit={e => e.preventDefault()}>
             <label>
-                <span>Search</span>
+                <span>Search albums</span>
                 <input id='search-input' type='text' value={searchTerm} onChange={ev => onSearchChange(ev.target.value)} />
             </label>
         </form>

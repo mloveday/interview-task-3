@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import {coverageUrl, githubUrl, homepageUrl} from "../constants";
 
 const CompactNav = styled.nav`
   margin-bottom: 1rem;
@@ -38,13 +39,13 @@ export const NavBar: React.FC = props => {
         <ul>
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/credentials'>Client credentials</Link></li>
-            <li><a href='https://github.com/mloveday/interview-task-3' target='_blank'>
+            <li><a href={githubUrl} target='_blank'>
                 Github repo <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a></li>
-            <li><a href='https://coveralls.io/github/mloveday/interview-task-3' target='_blank'>
+            <li><a href={coverageUrl} target='_blank'>
                 Code coverage <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a></li>
-            <li><a href='https://milesloveday.com' target='_blank'>
+            <li><a href={homepageUrl} target='_blank'>
                 MilesLoveday.com <FontAwesomeIcon icon={faExternalLinkAlt} />
             </a></li>
         </ul>

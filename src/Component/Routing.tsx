@@ -11,6 +11,7 @@ import {resetCredentials, setCredentials} from "../Store/CredentialsState";
 import {AppState} from "../Store/store";
 import {NavBar} from "./NavBar";
 import styled from 'styled-components';
+import {Footer} from "./Footer";
 
 const CompactMain = styled.main`
   padding-top: 0;
@@ -43,5 +44,6 @@ export const Routing: React.FC = props => {
                     </Route>
                 </Switch>
             </CompactMain>
+            <Footer/>
         </React.Fragment>)
 };
