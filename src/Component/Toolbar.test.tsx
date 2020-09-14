@@ -67,6 +67,25 @@ describe('Toolbar component', () => {
     expect(actions).toEqual([searchAlbums(expectedSearch)]);
   });
 
+  test('Does not make new request when search already fetched', () => {
+    const expectedSearch = 'expected search';
+    const location = mockLocation(expectedSearch);
+    jest.spyOn(Router, 'useLocation').mockReturnValue(location);
+    jest.spyOn(Router, 'useHistory').mockReturnValue(mockHistory(location));
+    const store = configureStore([thunk])({
+      albums: {
+        searchTerm: expectedSearch,
+      }
+    });
+
+    const result = render(store);
+
+    expect(result.find('#search-input').props().value).toEqual(expectedSearch);
+
+    const actions = store.getActions();
+    expect(actions).toEqual([]);
+  });
+
   test('Searches for term when search has changed', () => {
     const priorSearch = 'prior search';
     const expectedSearch = 'new search';
