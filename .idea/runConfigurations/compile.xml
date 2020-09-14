@@ -5,7 +5,6 @@
     <scripts>
       <script value="compile" />
     </scripts>
-    <arguments value="--env dev" />
     <node-interpreter value="project" />
     <envs />
     <method v="2" />
