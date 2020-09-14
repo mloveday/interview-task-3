@@ -7,8 +7,10 @@ export const ClientDetails: React.FC = props => {
     // normally this would be handled by using a backend of our own where the client secret is stored
     // but this is a simple mockup, and we can just let any users enter their own client credentials to avoid any security issues
     const dispatch = Redux.useDispatch();
-    const [id, setId] = React.useState(localStorage.getItem(clientIdKey) ?? '');
-    const [secret, setSecret] = React.useState(localStorage.getItem(clientSecretKey) ?? '');
+    const storedId = localStorage.getItem(clientIdKey);
+    const storedSecret = localStorage.getItem(clientSecretKey);
+    const [id, setId] = React.useState(storedId ?? '');
+    const [secret, setSecret] = React.useState(storedSecret ?? '');
     const putInStorage = () => {
         console.debug('Storing credentials in local storage');
         localStorage.setItem(clientIdKey, id);
@@ -23,6 +25,8 @@ export const ClientDetails: React.FC = props => {
         setSecret('');
         dispatch(resetCredentials()); // this will be picked up in routing and allows navigation to other pages
     };
+    const disableSave = id === '' || secret === '' || (storedId === id && storedSecret === secret);
+    const disableRemove = storedId === null && storedSecret === null;
     return <div>
         <h3>Please enter your Spotify client details below to enable API access</h3>
         <div>
@@ -44,9 +48,9 @@ export const ClientDetails: React.FC = props => {
                 <span>Client secret</span>
                 <input id='client-secret-input' value={secret} onChange={ev => setSecret(ev.target.value)}/>
             </label>
-            <button id='save-credentials' type='button' onClick={putInStorage}>Save to local storage</button>
+            <button id='save-credentials' disabled={disableSave} type='button' onClick={putInStorage}>Save to local storage</button>
             <br/>
-            <button id='remove-credentials' type='button' onClick={deleteFromStorage}>Remove from local storage</button>
+            <button id='remove-credentials' disabled={disableRemove} type='button' onClick={deleteFromStorage}>Remove from local storage</button>
         </form>
     </div>
 }

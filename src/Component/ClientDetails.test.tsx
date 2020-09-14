@@ -35,6 +35,8 @@ describe('ClientDetails component', () => {
 
     expect(result.find('#client-id-input').props().value).toEqual('');
     expect(result.find('#client-secret-input').props().value).toEqual('');
+    expect(result.find('#save-credentials').prop("disabled")).toEqual(true);
+    expect(result.find('#remove-credentials').prop("disabled")).toEqual(true);
   })
 
   test('Given stored credentials in local storage, shows credentials in form', () => {
@@ -49,6 +51,8 @@ describe('ClientDetails component', () => {
 
     expect(result.find('#client-id-input').props().value).toEqual(expectedId);
     expect(result.find('#client-secret-input').props().value).toEqual(expectedSecret);
+    expect(result.find('#save-credentials').prop("disabled")).toEqual(true);
+    expect(result.find('#remove-credentials').prop("disabled")).toEqual(false);
   })
 
   test('Changing credentials and saving to local storage', () => {
@@ -74,6 +78,8 @@ describe('ClientDetails component', () => {
     // then inputs are updated
     expect(getClientIdWrapper().props().value).toEqual(expectedId);
     expect(getClientSecretWrapper().props().value).toEqual(expectedSecret);
+    expect(result.find('#save-credentials').prop("disabled")).toEqual(false);
+    expect(result.find('#remove-credentials').prop("disabled")).toEqual(true);
 
     // and when save button is pressed
     result.find('#save-credentials').simulate('click');
@@ -103,6 +109,8 @@ describe('ClientDetails component', () => {
     // then inputs are populated
     expect(getClientIdWrapper().props().value).toEqual(expectedId);
     expect(getClientSecretWrapper().props().value).toEqual(expectedSecret);
+    expect(result.find('#save-credentials').prop("disabled")).toEqual(true);
+    expect(result.find('#remove-credentials').prop("disabled")).toEqual(false);
 
     // and when reset is clicked
     result.find('#remove-credentials').simulate('click');
@@ -110,6 +118,8 @@ describe('ClientDetails component', () => {
     // then inputs are updated and local storage is updated and redux action is dispatched
     expect(getClientIdWrapper().props().value).toEqual('');
     expect(getClientSecretWrapper().props().value).toEqual('');
+    expect(result.find('#save-credentials').prop("disabled")).toEqual(true);
+    expect(result.find('#remove-credentials').prop("disabled")).toEqual(true);
     expect(localStorage.removeItem).toHaveBeenCalledWith(clientIdKey);
     expect(localStorage.removeItem).toHaveBeenCalledWith(clientSecretKey);
     const actions = mockStore.getActions();
