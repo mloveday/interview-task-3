@@ -110,7 +110,7 @@ describe('Toolbar component', () => {
     jest.spyOn(Router, 'useHistory');
     const store = getStore();
 
-    const result = render(store);
+    render(store);
 
     const actions = store.getActions();
     expect(actions).toEqual([clearAlbums()]);
@@ -142,5 +142,17 @@ describe('Toolbar component', () => {
     render(configureStore([thunk])({albums: {abortController}}));
 
     expect(abortController.abort).toHaveBeenCalledTimes(1);
+  })
+
+  test('When submitting the form, does nothing', () => {
+    jest.spyOn(Router, 'useLocation').mockReturnValue(mockLocation('some-search'));
+    jest.spyOn(Router, 'useHistory');
+    const preventDefault = jest.fn();
+
+    const result = render(getStore());
+
+    result.find('form').simulate('submit', {preventDefault});
+
+    expect(preventDefault).toHaveBeenCalledTimes(1);
   })
 })
