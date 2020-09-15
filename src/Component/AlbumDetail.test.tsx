@@ -3,12 +3,12 @@ import * as React from 'react';
 import configureStore from 'redux-mock-store';
 import Router from 'react-router';
 import * as Enzyme from 'enzyme';
-import {getAlbum} from "../Store/AlbumState";
-import {AlbumDetail} from "./AlbumDetail";
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
+import {format} from 'date-fns';
 import {Link, BrowserRouter} from 'react-router-dom';
-import moment = require('moment');
+import {getAlbum} from "../Store/AlbumState";
+import {AlbumDetail} from "./AlbumDetail";
 
 jest.mock('../Store/AlbumState')
 
@@ -105,7 +105,7 @@ describe('AlbumDetail component', () => {
     expect(result.contains(<h2>{album.name}</h2>)).toEqual(true);
     expect(result.contains(<img src={image.url} alt={`Album artwork`}/>)).toEqual(true);
     expect(result.contains(<ul>{album.artists.map(artist => <li key={artist.id}>{artist.name}</li>)}</ul>)).toEqual(true);
-    expect(result.contains(<div>Released on {moment(album.release_date).format('dddd, MMMM Do YYYY')}</div>)).toEqual(true);
+    expect(result.contains(<div>Released on {format(new Date(album.release_date), 'EEEE, MMMM Do yyyy')}</div>)).toEqual(true);
     expect(result.contains(<div>{album.total_tracks} tracks</div>)).toEqual(true);
   })
 
@@ -126,7 +126,7 @@ describe('AlbumDetail component', () => {
     expect(result.contains(<h2>{album.name}</h2>)).toEqual(true);
     expect(result.contains(<img src={image.url} alt={`Album artwork`}/>)).toEqual(true);
     expect(result.contains(<ul>{album.artists.map(artist => <li key={artist.id}>{artist.name}</li>)}</ul>)).toEqual(true);
-    expect(result.contains(<div>Released on {moment(album.release_date).format('dddd, MMMM Do YYYY')}</div>)).toEqual(true);
+    expect(result.contains(<div>Released on {format(new Date(album.release_date), 'EEEE, MMMM Do yyyy')}</div>)).toEqual(true);
     expect(result.contains(<div>{album.total_tracks} tracks</div>)).toEqual(true);
   })
 

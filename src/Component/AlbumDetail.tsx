@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'react-redux';
 import {Link, match, useLocation} from 'react-router-dom';
-import moment from 'moment';
+import {format} from 'date-fns';
 import {AppState} from "../Store/store";
 import {getAlbum} from "../Store/AlbumState";
 
@@ -28,7 +28,7 @@ export const AlbumDetail: React.FC<{match: match<{id: string}>}> = props => {
         <h3>Artists</h3>
         <ul>{album.artists.map(artist => <li key={artist.id}>{artist.name}</li>)}</ul>
         <h3>Other information</h3>
-        <div>Released on {moment(album.release_date).format('dddd, MMMM Do YYYY')}</div>
+        <div>Released on {format(new Date(album.release_date), 'EEEE, MMMM Do yyyy')}</div>
         <div>{album.total_tracks} tracks</div>
     </div>
 };

@@ -1,9 +1,14 @@
-var path = require('path');
+const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     context: __dirname,
     entry: './src/gh-index.tsx',
     mode: 'production',
+    optimization: {
+        minimize: true,
+        minimizer: [new TerserPlugin()],
+    },
     output: {
         path: path.resolve(__dirname, "public/dist/"),
         filename: "bundle.js"
