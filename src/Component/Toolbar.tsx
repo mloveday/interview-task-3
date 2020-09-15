@@ -7,6 +7,10 @@ import * as queryString from 'query-string';
 import debounce from 'lodash/debounce';
 
 const requestSearch = debounce((value: string, state: AlbumState, dispatch) => {
+    if (value === '') {
+        dispatch(clearAlbums());
+        return;
+    }
     if (state.abortController !== undefined) {
         state.abortController.abort();
     }
@@ -29,13 +33,8 @@ export const Toolbar: React.FC = () => {
     }
 
     const onSearchChange = (value: string) => {
-        if (value === '') {
-            history.push('');
-            dispatch(clearAlbums());
-        } else {
-            history.push(`?query=${value}`);
-            requestSearch(value, albumState, dispatch);
-        }
+        history.push(value === '' ? '' : `?query=${value}`);
+        requestSearch(value, albumState, dispatch);
         setSearchTerm(value);
     };
 

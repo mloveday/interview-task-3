@@ -113,7 +113,7 @@ describe('Toolbar component', () => {
     const result = render(store);
 
     const actions = store.getActions();
-    expect(actions).toEqual([searchAlbums('')]);
+    expect(actions).toEqual([clearAlbums()]);
   });
 
   test('On clearing search term, empties searched albums state', () => {
