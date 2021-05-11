@@ -30,7 +30,7 @@
     "js-base64": "^3.4.5",
     "jsdom": "^16.4.0",
     "jsdom-global": "^3.0.2",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "query-string": "^6.12.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
